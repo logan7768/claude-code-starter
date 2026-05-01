@@ -1,0 +1,1 @@
+{ "session_id": "t-004", "tool_name": "Bash", "tool_input": { "command": "chmod 777 /etc/passwd" } }

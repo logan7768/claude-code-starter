@@ -1,0 +1,30 @@
+# Claude Code local config — never commit
+**/settings.json
+**/settings.local.json
+**/.claude.json.backup
+
+# Backups created by installer
+**/.claude.backup.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Test artifacts
+tests/output/
+*.tmp
+
+# Secrets - never commit
+.env
+.env.local
+.env.*
+!.env.example
+!.env.template
+
+# Claude Code per-project private preferences (Anthropic recommended)
+CLAUDE.local.md

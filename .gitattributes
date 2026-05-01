@@ -1,0 +1,8 @@
+# Force LF line endings for shell scripts (Linux/Mac compatibility)
+*.sh text eol=lf
+# Default: native line endings
+* text=auto
+# Binary files
+*.png binary
+*.jpg binary
+*.zip binary

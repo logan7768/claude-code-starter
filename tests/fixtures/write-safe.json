@@ -1,0 +1,1 @@
+{ "session_id": "t-009", "tool_name": "Write", "tool_input": { "file_path": "/tmp/hello.py", "content": "print('hello')" } }
