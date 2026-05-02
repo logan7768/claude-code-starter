@@ -71,7 +71,7 @@ claude
 /context                  # see token usage
 ```
 
-Then in a Claude Code Bash tool, try `rm -rf /etc` — the hook should deny it with a clear reason. Try also `cat .env` (if you have one) — it should also be blocked.
+Then in a Claude Code Bash tool, try `rm -rf /etc` â€” the hook should deny it with a clear reason. Try also `cat .env` (if you have one) â€” it should also be blocked.
 
 ## Requirements
 
@@ -93,12 +93,33 @@ See [`docs/CUSTOMIZATION.md`](docs/CUSTOMIZATION.md). Common adjustments:
 
 - **As a plugin**: this starter can be packaged as a Claude Code plugin and submitted to the [marketplace](https://claude.com/plugins). See `docs/CUSTOMIZATION.md`.
 - **Per-project hooks**: copy only `claude-config/hooks/` and a project-local `.claude/settings.json` for project-scoped enforcement.
+## Recommended companion plugins
 
+This template focuses on **meta-cognitive skills** (reasoning, verification, planning, self-improvement, security). For **operational tasks** like code refactoring or PR review, install Anthropic''s official plugins alongside this template.
+
+Inside a Claude Code session, run these commands one by one:
+
+- `/plugin install code-simplifier`
+- `/plugin install code-review`
+- `/plugin install feature-dev`
+- `/plugin install pr-review-toolkit`
+- `/reload-plugins`
+
+| Plugin | Purpose |
+|---|---|
+| `code-simplifier` | Refactor and simplify existing code while preserving functionality |
+| `code-review` | Review changes before commit |
+| `feature-dev` | Scaffold new features with architecture-aware design |
+| `pr-review-toolkit` | Comprehensive PR analysis (silent failures, type design, tests) |
+
+These plugins come from the official `anthropics/claude-plugins-official` marketplace and are installed in user scope (available across all your projects). See the [Claude Code plugins documentation](https://code.claude.com/docs/en/plugins) for marketplace setup details.
+
+**The two systems compose naturally:** this template tells Claude *how* to think (OODA, anti-hallucination, plan-before-code, hindsight); the official plugins tell Claude *what* to do (refactor, review, scaffold).
 ## Philosophy
 
 See [`docs/PHILOSOPHY.md`](docs/PHILOSOPHY.md).
 
-TL;DR — 5 principles:
+TL;DR â€” 5 principles:
 1. CLAUDE.md global = minimal identity (< 60 lines)
 2. Auto Memory replaces manual error logs
 3. Skills = unit of conditional behavior, loaded on match
@@ -108,14 +129,14 @@ TL;DR — 5 principles:
 ## Credits
 
 - **OODA Loop**: Col. John Boyd (USAF, 1970s)
-- **INVEST criteria**: Bill Wake (Agile XP) — adapted per Anthropic issue #20051
+- **INVEST criteria**: Bill Wake (Agile XP) â€” adapted per Anthropic issue #20051
 - **Anti-hallucination**: [Anthropic official docs](https://docs.anthropic.com/en/docs/test-and-evaluate/strengthen-guardrails/reduce-hallucinations)
 - **Hindsight protocol**: original to this template
 - **Anthropic primitives**: [Skills](https://code.claude.com/docs/en/skills), [Hooks](https://code.claude.com/docs/en/hooks), [Memory](https://code.claude.com/docs/en/memory)
 
 ## License
 
-MIT — see [`LICENSE`](LICENSE).
+MIT â€” see [`LICENSE`](LICENSE).
 
 ## Contributing
 
