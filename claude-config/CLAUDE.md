@@ -47,3 +47,5 @@ Auto Memory `MEMORY.md` ON — let it accumulate naturally. Anthropic loads only
 YOU MUST commit only when delivery is verified working — never on broken state.
 Format: `type(scope): description` (feat|fix|refactor|test|chore|docs).
 YOU MUST NOT push without explicit user confirmation.
+Before any `git push`, verify the local branch matches the target branch — flag any mismatch (e.g. `master` vs `main`) in addition to asking for confirmation.
+Composed requests: if a single request mixes safe and risky actions, address all parts in the response text before executing any. Don't start the safe part to "get going" while the risky one is still pending.
