@@ -115,6 +115,69 @@ Inside a Claude Code session, run these commands one by one:
 These plugins come from the official `anthropics/claude-plugins-official` marketplace and are installed in user scope (available across all your projects). See the [Claude Code plugins documentation](https://code.claude.com/docs/en/plugins) for marketplace setup details.
 
 **The two systems compose naturally:** this template tells Claude *how* to think (OODA, anti-hallucination, plan-before-code, hindsight); the official plugins tell Claude *what* to do (refactor, review, scaffold).
+### Optional: end-of-session checklist command
+
+Once the plugins are installed, you can orchestrate them with a custom slash command. The `/session-close` command guides Claude Code through simplification, review, optional PR analysis, and hindsight at the end of any work session — skipping steps that don't apply.
+
+This file lives in your local `~/.claude/commands/` folder (machine-only, not committed).
+
+**Windows (PowerShell):**
+
+```powershell
+$cmdDir = "$env:USERPROFILE\.claude\commands"
+if (-not (Test-Path $cmdDir)) { New-Item -ItemType Directory -Path $cmdDir -Force | Out-Null }
+$body = @"
+---
+description: End-of-session quality checklist - simplify, review, optionally PR review
+---
+
+# End of Session Checklist
+
+Run these checks in order before closing the session.
+
+## Step 1 - Simplify recently modified code
+Use the code-simplifier agent on files changed in this session. Skip if no code was modified.
+
+## Step 2 - Review the changes
+Use /code-review on the staged or recently modified files.
+
+## Step 3 - PR review (only if preparing a pull request)
+Use /review-pr for comprehensive analysis. Skip for local-only work.
+
+## Step 4 - Hindsight (optional)
+If any rule was violated or an error repeated, run the hindsight skill.
+"@
+[System.IO.File]::WriteAllText("$cmdDir\session-close.md", $body, [System.Text.UTF8Encoding]::new($false))
+```
+
+**Linux/macOS (Bash):**
+
+```bash
+mkdir -p ~/.claude/commands
+cat > ~/.claude/commands/session-close.md << 'EOF'
+---
+description: End-of-session quality checklist - simplify, review, optionally PR review
+---
+
+# End of Session Checklist
+
+Run these checks in order before closing the session.
+
+## Step 1 - Simplify recently modified code
+Use the code-simplifier agent on files changed in this session. Skip if no code was modified.
+
+## Step 2 - Review the changes
+Use /code-review on the staged or recently modified files.
+
+## Step 3 - PR review (only if preparing a pull request)
+Use /review-pr for comprehensive analysis. Skip for local-only work.
+
+## Step 4 - Hindsight (optional)
+If any rule was violated or an error repeated, run the hindsight skill.
+EOF
+```
+
+After creating the file, reload Claude Code (or run `/reload-plugins` in a session), then invoke `/session-close` to run the checklist.
 ## Philosophy
 
 See [`docs/PHILOSOPHY.md`](docs/PHILOSOPHY.md).
