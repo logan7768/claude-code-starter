@@ -3,7 +3,28 @@
 # Outputs Anthropic-spec JSON (hookSpecificOutput.permissionDecision).
 set -uo pipefail
 input=$(cat)
-cmd=$(echo "$input" | jq -r '.tool_input.command // ""')
+# Fail closed on malformed JSON or missing/empty command.
+if ! cmd=$(echo "$input" | jq -r '.tool_input.command // ""' 2>/dev/null); then
+    jq -n --arg r "Hook could not parse tool input (malformed JSON). Failing closed for safety." '{
+        hookSpecificOutput: {
+            hookEventName: "PreToolUse",
+            permissionDecision: "deny",
+            permissionDecisionReason: $r
+        }
+    }'
+    exit 0
+fi
+
+if [ -z "$cmd" ]; then
+    jq -n --arg r "Hook received empty tool_input.command. Failing closed for safety." '{
+        hookSpecificOutput: {
+            hookEventName: "PreToolUse",
+            permissionDecision: "deny",
+            permissionDecisionReason: $r
+        }
+    }'
+    exit 0
+fi
 deny() {
   jq -n --arg r "$1" '{
     hookSpecificOutput: {
