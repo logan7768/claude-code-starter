@@ -28,3 +28,6 @@ tests/output/
 
 # Claude Code per-project private preferences (Anthropic recommended)
 CLAUDE.local.md
+
+PRE-MORTEM.md
+PRE-MORTEM.json
