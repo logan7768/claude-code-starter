@@ -5,6 +5,18 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Sem
 
 ## [Unreleased]
 
+## [0.1.5] - 2026-05-27
+
+### Added
+- Context lifecycle slash commands in `claude-config/commands/`:
+  - `/ctx-save` — write a session handoff to `~/.claude/handoffs/`, anchored on real git state.
+  - `/ctx-compact` — print a faithful pre-compact snapshot.
+  - `/ctx-reset` — combined handoff + reset procedure.
+- Auto-creation of the handoff store at `~/.claude/handoffs/` during install.
+- `CLAUDE.md`: minimal context-hygiene section pointing to the built-in `/context`.
+
+### Changed
+- `install.ps1` and `install.sh`: copy `claude-config/commands/` and create the `handoffs/` directory.
 ## [0.1.0] — 2026-05-01
 
 ### Added
