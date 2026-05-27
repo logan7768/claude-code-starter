@@ -5,6 +5,21 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and [Sem
 
 ## [Unreleased]
 
+## [0.1.6] - 2026-05-27
+
+### Fixed
+- **Hooks no longer fail silently.** `settings.{windows,linux}.json` previously referenced `$CLAUDE_PROJECT_DIR/.claude/hooks/...`, but the installer copies hooks to `~/.claude/hooks/` (user level). The mismatch meant `pre-bash-security` and `pre-write-secret-scan` returned `non-blocking status code: file does not exist` on every tool call — security checks were effectively disabled.
+
+### Changed
+- `settings.windows.json` and `settings.linux.json` now use a `__CLAUDE_HOOKS_DIR__` placeholder for the hooks directory.
+- `install.ps1` and `install.sh` substitute the placeholder with the absolute path to `$CLAUDE_DIR/hooks/` at install time, producing a `settings.json` whose hook paths resolve correctly regardless of the current project directory.
+
+### Migration
+For existing installations (no full reinstall needed):
+1. Open `~/.claude/settings.json`.
+2. Replace every occurrence of `$CLAUDE_PROJECT_DIR\.claude\hooks` (Windows) or `$CLAUDE_PROJECT_DIR/.claude/hooks` (Linux) with the absolute path to `~/.claude/hooks` (e.g. `C:\Users\<name>\.claude\hooks`).
+3. Restart Claude Code.
+
 ## [0.1.5] - 2026-05-27
 
 ### Added
