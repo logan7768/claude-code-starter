@@ -25,7 +25,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/pre-bash-security.sh"
+            "command": "bash \"__CLAUDE_HOOKS_DIR__/pre-bash-security.sh\""
           }
         ]
       },
@@ -34,7 +34,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/pre-write-secret-scan.sh"
+            "command": "bash \"__CLAUDE_HOOKS_DIR__/pre-write-secret-scan.sh\""
           }
         ]
       }

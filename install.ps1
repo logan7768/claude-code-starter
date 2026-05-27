@@ -24,7 +24,12 @@ New-Item -ItemType Directory -Path $ClaudeDir -Force | Out-Null
 Copy-Item "$SourceDir\CLAUDE.md" $ClaudeDir
 Copy-Item "$SourceDir\hooks"    $ClaudeDir -Recurse
 Copy-Item "$SourceDir\skills"   $ClaudeDir -Recurse
-Copy-Item "$SourceDir\settings.windows.json" "$ClaudeDir\settings.json"
+
+# Render settings.json with absolute hooks path (v0.1.6)
+$HooksDir = (Join-Path $ClaudeDir "hooks").Replace('\', '\\')
+$SettingsContent = (Get-Content "$SourceDir\settings.windows.json" -Raw) `
+    -replace '__CLAUDE_HOOKS_DIR__', $HooksDir
+Set-Content -Path "$ClaudeDir\settings.json" -Value $SettingsContent -Encoding UTF8 -NoNewline
 
 # Install commands (v0.1.5)
 $CommandsSource = Join-Path $SourceDir "commands"

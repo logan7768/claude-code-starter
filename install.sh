@@ -31,8 +31,11 @@ mkdir -p "$CLAUDE_DIR"
 cp    "$SOURCE_DIR/CLAUDE.md"             "$CLAUDE_DIR/"
 cp -r "$SOURCE_DIR/hooks"                 "$CLAUDE_DIR/"
 cp -r "$SOURCE_DIR/skills"                "$CLAUDE_DIR/"
-cp    "$SOURCE_DIR/settings.linux.json"   "$CLAUDE_DIR/settings.json"
 chmod +x "$CLAUDE_DIR/hooks/"*.sh
+
+# Render settings.json with absolute hooks path (v0.1.6)
+HOOKS_DIR="$CLAUDE_DIR/hooks"
+sed "s|__CLAUDE_HOOKS_DIR__|$HOOKS_DIR|g" "$SOURCE_DIR/settings.linux.json" > "$CLAUDE_DIR/settings.json"
 
 # Install commands (v0.1.5)
 if [ -d "$SOURCE_DIR/commands" ]; then
