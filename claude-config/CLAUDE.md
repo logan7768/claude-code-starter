@@ -49,3 +49,9 @@ Format: `type(scope): description` (feat|fix|refactor|test|chore|docs).
 YOU MUST NOT push without explicit user confirmation.
 Before any `git push`, verify the local branch matches the target branch — flag any mismatch (e.g. `master` vs `main`) in addition to asking for confirmation.
 Composed requests: if a single request mixes safe and risky actions, address all parts in the response text before executing any. Don't start the safe part to "get going" while the risky one is still pending.
+
+## Context hygiene
+- Use the built-in `/context` to read **measured** token usage. Never estimate.
+- At >65% usage: suggest `/ctx-compact` then `/compact`.
+- At >80% usage: suggest `/ctx-reset` (writes a handoff) then `/clear`.
+- Summarize files >500 lines and tool output >100 lines instead of repeating them verbatim.
